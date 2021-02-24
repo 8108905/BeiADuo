@@ -1,0 +1,222 @@
+[
+    {
+        "title": "控制台",
+        "href": "/admin/welcome",
+        "fontFamily": "ok-icon",
+        "icon": "&#xe654;",
+        "spread": true,
+        "isCheck": true
+    },
+    {
+        "title": "仪表盘",
+        "href": "/admin/dashboard",
+        "icon": "&#xe665;",
+        "spread": true
+    },
+    {
+        "title": "分类题材",
+        "href": "",
+        "icon": "&#xe62d;",
+        "spread": false,
+        "children": [
+            {
+                "title": "分类",
+                "href": "/admin/categories",
+                "icon": "&#xe62d;",
+                "spread": false
+            },
+            {
+                "title": "题材",
+                "href": "/admin/themes",
+                "icon": "&#xe62e;",
+                "spread": false
+            }
+        ]
+    },
+    {
+        "title": "漫画管理",
+        "href": "",
+        "icon": "&#xe62c;",
+        "spread": false,
+        "children": [
+            {
+                "title": "漫画列表",
+                "fontFamily": "ok-icon",
+                "icon": "&#xe882;",
+                "href": "/admin/comics",
+                "spread": false
+            },
+            {
+                "title": "待审核漫画",
+                "fontFamily": "ok-icon",
+                "icon": "ok-icon-shuju1",
+                "href": "/admin/comics/review",
+                "spread": false
+            },            {
+                "title": "被拒绝漫画",
+                "fontFamily": "ok-icon",
+                "icon": "ok-icon-shuju1",
+                "href": "/admin/comics/reject",
+                "spread": false
+            },
+            {
+                "title": "待审核章节",
+                "fontFamily": "ok-icon",
+                "icon": "ok-icon-shuju1",
+                "href": "/admin/chapters/review",
+                "spread": false
+            }, {
+                "title": "被拒绝章节",
+                "fontFamily": "ok-icon",
+                "icon": "ok-icon-shuju1",
+                "href": "/admin/chapters/reject",
+                "spread": false
+            }
+        ]
+    },
+
+    {
+        "title": "APP管理",
+        "fontFamily": "ok-icon",
+        "icon": "&#xe7a7;",
+        "spread": false,
+        "children": [
+            {
+                "title": "广告管理",
+                "href": "",
+                "icon": "&#xe658;",
+                "spread": false
+            },
+            {
+                "title": "相关管理",
+                "href": "",
+                "icon": "&#xe658;",
+                "spread": false
+            }
+        ]
+    },
+    {
+        "title": "会员管理",
+        "href": "",
+        "icon": "&#xe66f;",
+        "spread": false,
+        "children": [
+
+            {
+                "title": "用户列表",
+                "href": "/admin/users",
+                "icon": "&#xe62e;",
+                "spread": false
+            },   {
+                "title": "登陆记录",
+                "href": "/admin/userLoginLogs",
+                "icon": "&#xe62e;",
+                "spread": false
+            },   {
+                "title": "购买记录",
+                "href": "/admin/userLoginLogs",
+                "icon": "&#xe62e;",
+                "spread": false
+            },   {
+                "title": "阅读记录",
+                "href": "/admin/userLoginLogs",
+                "icon": "&#xe62e;",
+                "spread": false
+            },   {
+                "title": "关注记录",
+                "href": "/admin/userLoginLogs",
+                "icon": "&#xe62e;",
+                "spread": false
+            }
+
+        ]
+    },
+    {
+        "title": "友情广告",
+        "href": "",
+        "icon": "&#xe658;",
+        "spread": false,
+        "children": [
+            {
+                "title": "友情链接",
+                "href": "/admin/links",
+                "icon": "&#xe636;",
+                "spread": false
+            },
+            {
+                "title": "广告列表",
+                "href": "/admin/booths",
+                "icon": "&#xe62d;",
+                "spread": false
+            },
+            {
+                "title": "轮播图",
+                "href": "/admin/banners",
+                "icon": "&#xe62d;",
+                "spread": false
+            }
+        ]
+    },
+    {
+        "title": "交流中心",
+        "icon": "&#xe674;",
+        "children": [
+            {
+                "title": "漫画评论",
+                "href": "/admin/comments"
+            },
+            {
+                "title": "站点留言",
+                "href": "/admin/whiteboards"
+            }
+        ]
+    },
+    {
+        "title": "财务中心",
+        "fontFamily": "ok-icon",
+        "icon": "ok-icon-yooxi",
+        "spread": false,
+        "children": [
+            {
+                "title": "支付设置",
+                "href": "pages/help/ok_font.html",
+                "icon": "&#xe62e;",
+                "spread": false
+            },
+            {
+                "title": "订单管理",
+                "href": "pages/help/okFly.html",
+                "icon": "&#xe62e;",
+                "spread": false
+            },
+            {
+                "title": "卡密管理",
+                "href": "/admin/cards",
+                "icon": "ok-icon-yooxi",
+                "spread": false
+            }
+        ]
+    },
+    {
+        "title": "系统管理",
+        "href": "",
+        "fontFamily": "ok-icon",
+        "icon": "&#xe68a;",
+        "spread": false,
+        "children": [
+            {
+                "title": "系统设置",
+                "href": "/admin/website_setting",
+                "icon": "&#xe62e;",
+                "spread": false
+            },
+            {
+                "title": "模版设置",
+                "href": "/admin/theme_setting",
+                "icon": "&#xe609;",
+                "spread": false
+            }
+
+        ]
+    }
+]
