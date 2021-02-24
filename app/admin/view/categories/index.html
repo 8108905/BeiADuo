@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/css/oksub.css">
+    <script type="text/javascript" src="/static/admin/lib/loading/okLoading.js"></script>
+</head>
+<body>
+<div class="ok-body">
+
+    <!--数据表格-->
+    <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
+</div>
+<!--js逻辑-->
+<script src="/static/admin/lib/layui/layui.js"></script>
+<script>
+    layui.use(["table", "form", "laydate", "okLayer", "okUtils", "okMock"], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let util = layui.util;
+        let laydate = layui.laydate;
+        let okLayer = layui.okLayer;
+        let okUtils = layui.okUtils;
+        okLoading.close();
+        util.fixbar({});
+
+        laydate.render({elem: "#startTime", type: "datetime"});
+        laydate.render({elem: "#endTime", type: "datetime"});
+
+        let articleTable = table.render({
+            elem: "#tableId",
+            url: '/admin/categories/getAll',
+            limit: 20,
+            even: true,
+            toolbar: "#toolbarTpl",
+            size: "xs",
+            cols: [[
+                {type: "checkbox", fixed: "left"},
+                {field: "id", title: "ID", width: 90, sort: true},
+                {field: "name", title: "地区", width: 90},
+                {field: "status", title: "状态", width: 90, align: "center", templet: "#statusTpl"},
+                {field: "sort", title: "sort", width: 80, sort: true},
+                {field: "belongsType", title: "所属", width: 90, sort: true},
+                {field: "keywords", title: "关键词", width: 200},
+                {field: "description", title: "描述", width: 200},
+                {field: "create_time", title: "创建日期", width: 180},
+                {title: "操作", width: 120, align: "center", fixed: "right", templet: "#operationTpl"}
+            ]],
+            done: function (res, curr, count) {
+                console.log(res, curr, count)
+            }
+        });
+
+        form.on("submit(search)", function (data) {
+            articleTable.reload({
+                where: data.field,
+                page: {curr: 1}
+            });
+            return false;
+        });
+
+        table.on("toolbar(tableFilter)", function (obj) {
+            switch (obj.event) {
+                case "batchEnabled":
+                    batchEnabled();
+                    break;
+                case "batchDisabled":
+                    batchDisabled();
+                    break;
+                case "batchDelete":
+                    batchDelete();
+                    break;
+                case "add":
+                    add();
+                    break;
+            }
+        });
+
+        table.on("tool(tableFilter)", function (obj) {
+            let data = obj.data;
+            switch (obj.event) {
+                case "updateById":
+                    updateById(data.id);
+                    break;
+                case "deleteById":
+                    deleteById(data.id);
+                    break;
+            }
+        });
+
+
+        function add() {
+            okLayer.open("添加分类", "/admin/categories/create", "50%", "60%", null, function () {
+                articleTable.reload();
+            })
+        }
+
+        function updateById(id) {
+            okLayer.open("编辑分类", "/admin/categories/" + id+'/edit', "50%", "60%", null, function () {
+                articleTable.reload();
+            })
+        }
+
+        function deleteById(id) {
+            okLayer.confirm("确定要删除吗？", function () {
+                okUtils.ajax("/admin/categories/"+id, "delete", {idsStr: id}).done(function (response) {
+                    okUtils.tableSuccessMsg(response.msg);
+                    parent.layer.close(parent.layer.getFrameIndex(window.name));
+                }).fail(function (error) {
+
+                });
+            })
+        }
+    })
+</script>
+<!-- 头工具栏模板 -->
+<script type="text/html" id="toolbarTpl">
+    <div class="layui-btn-container">
+
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="add">添加分类</button>
+    </div>
+</script>
+<!-- 行工具栏模板 -->
+<script type="text/html" id="operationTpl">
+    <span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="updateById">编辑</span>
+    <span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="deleteById">删除</span>
+</script>
+
+<script type="text/html" id="statusTpl">
+    {{#  if(d.status == 1){ }}
+    <span class="layui-btn layui-btn-normal layui-btn-xs">正常状态</span>
+    {{#  } else { }}
+    <span class="layui-btn layui-btn-danger layui-btn-xs">已被禁用</span>
+    {{#  } }}
+</script>
+</body>
+</html>

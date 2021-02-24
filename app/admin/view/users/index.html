@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>所有会员</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/css/oksub.css">
+    <script type="text/javascript" src="/static/admin/lib/loading/okLoading.js"></script>
+</head>
+<body>
+<div class="ok-body">
+    <!--模糊搜索区域-->
+    <form class="layui-form ok-search-form">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="开始日期" autocomplete="off" id="startTime" name="startTime">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="截止日期" autocomplete="off" id="endTime" name="endTime">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="Email" autocomplete="off" name="email">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="姓名" autocomplete="off" name="name">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" placeholder="电话号" autocomplete="off" name="phone">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <select name="group" lay-verify="">
+                        <option value="" selected>选择用户组</option>
+                        <option value="1">普通用户</option>
+                        <option value="2">超级会员</option>
+                        <option value="3">签约作者</option>
+                        <option value="4">超级管理员</option>
+
+                    </select>
+                </div>
+
+
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <select name="status" lay-verify="">
+                        <option value="" selected>状态</option>
+                        <option value="1">正常</option>
+                        <option value="0">禁用</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <button class="layui-btn" lay-submit="" lay-filter="search">
+                        <i class="layui-icon">&#xe615;</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--数据表格-->
+    <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
+
+</div>
+<!--js逻辑-->
+<script src="/static/admin/lib/layui/layui.js"></script>
+<script>
+    layui.use(["element", "jquery", "table", "form", "laydate", "okLayer", "okUtils", "okMock"], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let laydate = layui.laydate;
+        let okLayer = layui.okLayer;
+        let okUtils = layui.okUtils;
+        let $ = layui.jquery;
+
+        laydate.render({elem: "#startTime", type: "datetime"});
+        laydate.render({elem: "#endTime", type: "datetime"});
+        okLoading.close($);
+        let userTable = table.render({
+            elem: '#tableId',
+            url: '/admin/users/getAll',
+            limit: 20,
+            page: true,
+            toolbar: true,
+            toolbar: "#toolbarTpl",
+            size: "sm",
+            parseData: function(res){ //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.data//解析数据列表
+                };
+            }
+            ,
+            cols: [[
+                {type: "checkbox", fixed: "left"},
+                {field: "id", title: "ID", width: 60, sort: true},
+                {field: "name", title: "名字", width: 120, align: "center", sort: true},
+                {field: "email", title: "Email", width: 200, align: "center", sort: true},
+                {field: "group", title: "用户组", width: 100, align: "center", sort: true},
+                {field: "phone", title: "电话号", width: 110, align: "center", sort: true},
+                {field: "phoneArea", title: " 电话归属地", width: 180, align: "center", sort: true},
+                {field: "status", title: "状态", width: 80, align: "center", sort: true, templet: "#statusTpl"},
+                {field: "loginCount", title: "登陆次数", width: 80,align: "center", sort: true},
+                {field: "lastLoginIp", title: "最后登陆IP", width: 140, align: "center", sort: true},
+                {field: "lastLoginIpArea", title: "登陆地点", width: 180, align: "center", sort: true},
+                {field: "vipEndAt", title: "VIP过期时间", width: 150, align: "center", sort: true,},
+                {field: "lastLoginAt", title: "最后登陆时间", width: 150, align: "center",templet: '#lastLoginAt', sort: true},
+                {field: "autoPay", title: " 自动支付", width: 80, align: "center",templet: '#autoPay', sort: true},
+                {field: "registerType", title: " 注册类型", width: 100, align: "center", sort: true},
+                {field: "fromType", title: " 来源类型", width: 100, align: "center", sort: true},
+                {field: "fromDevice", title: " 注册来源", width: 100, align: "center", sort: true},
+                {field: "fromBrowser", title: " 注册浏览器", width: 100, align: "center", sort: true},
+                {field: "fromIp", title: " 注册IP", width: 130, align: "center", sort: true},
+                {field: "fromArea", title: " 注册地区", width: 180, align: "center", sort: true},
+                {field: "fromReferrer", title: " 推荐者ID", width: 80, align: "center", sort: true},
+                {field: "invitationCode", title: " 邀请码", width: 80, align: "center", sort: true},
+                {field: "create_time", title: "创建时间", width: 145, align: "center", sort: true},
+                {title: "操作", width: 200, align: "center", fixed: "right", templet: "#operationTpl"}
+            ]],
+            done: function (res, curr, count) {
+                console.info(res, curr, count);
+            }
+        });
+
+        form.on("submit(search)", function (data) {
+            console.log(data.field);
+            userTable.reload({
+                where: data.field,
+                page: {curr: 1}
+            });
+            return false;
+        });
+
+        table.on("toolbar(tableFilter)", function (obj) {
+            switch (obj.event) {
+                case "batchEnabled":
+                    batchEnabled();
+                    break;
+                case "batchDisabled":
+                    batchDisabled();
+                    break;
+                case "batchDel":
+                    batchDel();
+                    break;
+                case "add":
+                    add();
+                    break;
+            }
+        });
+
+        table.on("tool(tableFilter)", function (obj) {
+            let data = obj.data;
+            switch (obj.event) {
+                case "edit":
+                    edit(data);
+                    break;
+                case "userLoginLogPage":
+                    userLoginLogPage(data);
+                    break;
+                case "del":
+                    del(data.id);
+                    break;
+
+            }
+        });
+
+        function batchEnabled() {
+            okLayer.confirm("确定要批量启用吗？", function (index) {
+                layer.close(index);
+                let idsStr = okUtils.tableBatchCheck(table);
+                if (idsStr) {
+                    okUtils.ajax("/user/normalUser", "put", {idsStr: idsStr}, true).done(function (response) {
+                        console.log(response);
+                        okUtils.tableSuccessMsg(response.msg);
+                    }).fail(function (error) {
+                        console.log(error)
+                    });
+                }
+            });
+        }
+
+        function batchDisabled() {
+            okLayer.confirm("确定要批量停用吗？", function (index) {
+                layer.close(index);
+                let idsStr = okUtils.tableBatchCheck(table);
+                if (idsStr) {
+                    okUtils.ajax("/user/stopUser", "put", {idsStr: idsStr}, true).done(function (response) {
+                        console.log(response);
+                        okUtils.tableSuccessMsg(response.msg);
+                    }).fail(function (error) {
+                        console.log(error)
+                    });
+                }
+            });
+        }
+
+        function batchDel() {
+            okLayer.confirm("确定要批量删除吗？", function (index) {
+                layer.close(index);
+                let idsStr = okUtils.tableBatchCheck(table);
+                if (idsStr) {
+
+                    okUtils.ajax("/admin/userLoginLogs/batchDel", "delete", {idsStr: idsStr}, true).done(function (response) {
+                        okUtils.tableSuccessMsg(response.msg);
+
+                        console.log(response)
+                    }).fail(function (error) {
+                        console.log(error);
+                    });
+                }
+            });
+        }
+
+        function add() {
+            okLayer.open("添加用户", "/admin/users/create", "50%", "70%", null, function () {
+                userTable.reload();
+            })
+        }
+
+        function edit(data) {
+            console.log(data.id);
+            okLayer.open("更新用户", "/admin/users/"+data.id+"/edit", "50%", "70%", null,function () {
+                userTable.reload();
+            })
+        }
+        function userLoginLogPage(data) {
+            console.log(data.id);
+            okLayer.open("用户登陆记录", "/admin/users/"+data.id+"/loginLogPage", "60%", "80%", null,function () {
+                userTable.reload();
+            })
+        }
+
+
+
+
+        function del(id) {
+            okLayer.confirm("确定要删除吗？", function () {
+                $.ajax({
+                    type:'delete',
+                    'url':'/admin/users/'+id,
+                    success:function (res) {
+                        console.log(res);
+                        if (res.status =='success')
+                        {
+                            okUtils.tableSuccessMsg(res.msg);
+                        }else {
+                            console.log(res.msg)
+                            okUtils.tableSuccessMsg(res.msg);
+                        }
+                    }
+                })
+            })
+        }
+    })
+</script>
+<!-- 头工具栏模板 -->
+<script type="text/html" id="toolbarTpl">
+    <div class="layui-btn-container">
+<!--        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="batchEnabled">批量上架</button>-->
+<!--        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="batchDisabled">批量下架</button>-->
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDel">批量删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加用户</button>
+    </div>
+</script>
+<!-- 行工具栏模板 -->
+<script type="text/html" id="operationTpl">
+<!--    <span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">充值记录</span>-->
+<!--    <span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">登陆记录</span>-->
+<!--    <span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">购买记录</span>-->
+<!--    <span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">阅读记录</span>-->
+<!--    <span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">关注记录</span>-->
+<!--    <span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">用户订单</span>-->
+<!--    <span class="layui-badge layui-bg-blue">目录</span>-->
+    <span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</span>
+    <span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>
+    <span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="userLoginLogPage">登陆记录</span>
+
+
+</script>
+
+
+
+<script type="text/html" id="lastLoginAt">
+    {{#  if(!d.lastLoginAt){ }}
+    <span class="layui-btn layui-btn-warm layui-btn-xs">从未登陆</span>
+    {{#  } }}
+
+    {{#  if(!d.lastLoginAt){ }}
+    <span class="layui-btn layui-btn-warm layui-btn-xs">从未登陆</span>
+    {{#  } else if(d.lastLoginAt) { }}
+    <span >{{d.lastLoginAt}}</span>
+    {{#  } }}
+
+
+</script>
+
+<script type="text/html" id="autoPay">
+    {{#  if(d.autoPay == 0){ }}
+    <span class="layui-btn layui-btn-warm layui-btn-xs">未开启</span>
+    {{#  } else if(d.autoPay == 1) { }}
+    <span class="layui-btn layui-btn-normal layui-btn-xs">已开启</span>
+    {{#  } }}
+</script>
+<!-- 启用|停用模板 -->
+<script type="text/html" id="statusTpl">
+    {{#  if(d.status == 1){ }}
+    <span class="layui-btn layui-btn-normal layui-btn-xs">正常</span>
+    {{#  } else if(d.status == 0) { }}
+    <span class="layui-btn layui-btn-warm layui-btn-xs">禁用</span>
+    {{#  } }}
+</script>
+<script type="text/html" id="roleTpl">
+    {{#  if(d.group_id == 1){ }}
+    <span class="layui-btn layui-btn-disabled layui-btn-xs">普通用户</span>
+    {{#  } else if(d.group_id == 2) { }}
+    <span class="layui-btn layui-btn-normal layui-btn-xs">超级会员</span>
+    {{#  } else if(d.group_id == 3) { }}
+    <span class="layui-btn layui-btn-primary layui-btn-xs">入住作者</span>
+    {{#  } else if(d.group_id == 4) { }}
+    <span class="layui-btn layui-btn-danger layui-btn-xs">超级管理员</span>
+    {{#  } }}
+</script>
+</body>
+</html>

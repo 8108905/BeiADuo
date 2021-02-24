@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/css/oksub.css">
+    <script type="text/javascript" src="/static/admin/lib/loading/okLoading.js"></script>
+</head>
+<body>
+<div class="ok-body">
+    <!--form表单-->
+    <form class="layui-form layui-form-pane ok-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户ID</label>
+            <div class="layui-input-block">
+                <select name="user_id" lay-verify="required" lay-search="">
+                        <option value="">选择用户ID</option>
+
+                    {foreach $users as $user}
+                        <option value="{$user.id}">{$user.id}</option>
+                    {/foreach}
+                    </select>
+                </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">卡号</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" placeholder="请输入卡号"  class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">卡密</label>
+            <div class="layui-input-block">
+                <input type="text" name="password" placeholder="请输入卡密"  class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="addArticle">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--js逻辑-->
+<script src="/static/admin/lib/layui/layui.js"></script>
+<script>
+    layui.use(["form", "okUtils", "okLayer"], function () {
+        let form = layui.form;
+        let okUtils = layui.okUtils;
+        let okLayer = layui.okLayer;
+        okLoading.close();
+        form.on("submit(addArticle)", function (data) {
+            okUtils.ajax("/admin/cards/recharge", "post", data.field, true).done(function (response) {
+                okLayer.greenTickMsg(response.msg, function () {
+                    parent.layer.close(parent.layer.getFrameIndex(window.name));
+                });
+            }).fail(function (error) {
+              console.log(error);
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

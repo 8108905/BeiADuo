@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/css/oksub.css">
+    <script type="text/javascript" src="/static/admin/lib/loading/okLoading.js"></script>
+</head>
+<body>
+<div class="ok-body ">
+    <div class="layui-fluid" style="padding-left: 100px;padding-right: 100px; ">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <fieldset class="layui-elem-field layui-field-title" style="margin: 30px;">
+                            <legend>模版设置  </legend>
+                        </fieldset>
+                            <form class="layui-form layui-form-pane ok-form">
+                            <div class="layui-row">
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">网站名称</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="title" lay-verify="required"
+                                                   value="{$theme.title}" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">网站域名</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="domain"  lay-verify="required|url"
+                                                   value="{$theme.domain}" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">关键词</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="keywords"  lay-verify="required"
+                                                   value="{$theme.keywords}" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-col-md12">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">网站描述</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="description"  lay-verify="required"
+                                                   value="{$theme.description}" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-col-md4">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">电脑版logo</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="logo"  lay-verify="required"
+                                                   value="{$theme.logo}" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">手机版logo</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="mobile_logo"  lay-verify="required"
+                                                   value="{$theme.mobile_logo}" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">微信二维码</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="wx_code"  lay-verify="required"
+                                                   value="{$theme.wx_code}"  class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <fieldset class="layui-elem-field layui-field-title" style="margin: 30px;">
+                                    <legend>数据相关  </legend>
+                                </fieldset>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">评论分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="number" name="whiteboard_page"  lay-verify="required"
+                                                   value="{$theme.whiteboard_page}"  class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">留言分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="number" name="comments_page"  lay-verify="required"
+                                                   value="{$theme.comments_page}"  class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">其他分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="11111"  lay-verify="required"
+                                                   value="20" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">其他分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="11111"  lay-verify="required"
+                                                   value="20" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">评论分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text"   lay-verify="required"
+                                                   value="20"  class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">留言分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text"   lay-verify="required"
+                                                   value="20"  class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">其他分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text"   lay-verify="required"
+                                                   value="20" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">其他分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="111"  lay-verify="required"
+                                                   value="20" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">评论分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text"   lay-verify="required"
+                                                   value="20"  class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">留言分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="11"  lay-verify="required"
+                                                   value="20"  class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">其他分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="111"  lay-verify="required"
+                                                   value="20" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">其他分页</label>
+                                        <div class="layui-input-block">
+                                            <input type="text"   lay-verify="required"
+                                                   value="20" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <fieldset class="layui-elem-field layui-field-title" style="margin: 30px;">
+                                    <legend>手机版底部导航</legend>
+                                </fieldset>
+                            </div>
+                            <div class="layui-row">
+                                {volist name='theme.mobile_navigator' id='vo'}
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">名称</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="mobile_navigator[{$key}][name]" value="{$vo.name}" lay-verify="required" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">图标</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="mobile_navigator[{$key}][icon]" value="{$vo.icon}" lay-verify="required" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">链接</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="mobile_navigator[{$key}][href]" value="{$vo.href}" lay-verify="required" class="layui-input">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                {/volist}
+
+                            </div>
+                            <div class="layui-row">
+                                <fieldset class="layui-elem-field layui-field-title" style="margin: 30px;">
+                                    <legend>相关信息</legend>
+                                </fieldset>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-col-md6">
+                                    <div class="layui-form-item">
+                                        <div class="layui-form-item layui-form-text">
+                                            <label class="layui-form-label">底部信息</label>
+                                            <div class="layui-input-block">
+                                                <textarea name="footer_info"
+                                                          class="layui-textarea">{$theme.footer_info}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6">
+                                    <div class="layui-form-item layui-form-text">
+                                        <label class="layui-form-label">版权信息</label>
+                                        <div class="layui-input-block">
+                                            <textarea name="copyright"
+                                                      class="layui-textarea">{$theme.copyright}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">统计代码</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="analytics" class="layui-textarea">{$theme.analytics} </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <div class="layui-footer  " style="left: 0; text-align: center">
+                                            <button class="layui-btn" lay-submit lay-filter="addArticle">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--js逻辑-->
+
+<script src="/static/admin/lib/layui/layui.js"></script>
+
+<script>
+    layui.use(["form", "okUtils", "okLayer"], function () {
+        let form = layui.form;
+        let okUtils = layui.okUtils;
+        let okLayer = layui.okLayer;
+        okLoading.close();
+        form.on("submit(addArticle)", function (data) {
+            okUtils.ajax("/admin/theme_setting", "post", data.field, true).done(function (response) {
+                okLayer.greenTickMsg(response.msg, function () {
+                    parent.layer.close(parent.layer.getFrameIndex(window.name));
+                });
+            }).fail(function (error) {
+            });
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

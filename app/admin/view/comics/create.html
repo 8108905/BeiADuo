@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/css/oksub.css">
+    <style>
+        .layui-upload-img{width: 100%; height: 92px; margin: 0 10px 10px 0;}
+    </style>
+    <script type="text/javascript" src="/static/admin/lib/loading/okLoading.js"></script>
+</head>
+<body>
+<div class="ok-body">
+    <!--form表单-->
+    <form class="layui-form layui-form-pane ok-form">
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">分类</label>
+                        <div class="layui-input-inline">
+                            <select name="category_id" lay-verify="required" lay-search="">
+                                {volist name="categories" id="vo"}
+                                <option value="{$vo.id}">{$vo.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">漫画标题</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="name" lay-verify="required" placeholder="漫画名称" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">小标题</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="subtitle" placeholder="小标题可以为空" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">作者</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="author"  placeholder="留空 ='匿名" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs6">
+                    <label class="layui-form-label">封面竖图</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="thumb" id="thumbImg" class="layui-input" placeholder="请上传面或者输入图片URL"
+                               value="">
+                        <div class="layui-btn  layui-btn-normal uppicx" id="thumb" style="position: absolute;top: 0px;right: 0;">
+                            竖图上传
+                        </div>
+                        <div class="layui-upload">
+                            <div class="layui-upload-list">
+                                <img class="layui-upload-img" id="thumbImage">
+                                <p id="thumbText"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs6">
+                    <label class="layui-form-label">封面横图</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="cover" id="coverImg" class="layui-input" placeholder="请上传漫画面或者输入图片URL"
+                               value="">
+                        <div class="layui-btn  layui-btn-normal uppicx" id="cover" style="position: absolute;top: 0px;right: 0;">
+                            封面上传
+                        </div>
+                        <div class="layui-upload">
+                            <div class="layui-upload-list">
+                                <img class="layui-upload-img" id="coverImage">
+                                <p id="coverText"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">推荐</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="recommend" lay-skin="switch" lay-text="是|否"  value="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">成人</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="adult" lay-skin="switch" lay-text="是|否"  value="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">锁定</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="locked" lay-skin="switch" lay-text="是|否"  value="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">连载</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="status" lay-skin="switch" lay-text="连载|完结"  value="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">关注量</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="followersCount" lay-verify="required" value="1" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">阅读量</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="readCount" lay-verify="required" value="1"  class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">点赞量</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="likeCount" lay-verify="required" value="1" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">评分</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="score" lay-verify="number" value="8.9"  class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">标签</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="tags" placeholder="多个标签逗号隔开"
+                                   class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">起始收费章节</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="startPay" value="0" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">收费金币</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="gold" value="0" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">付费类型 </label>
+                        <div class="layui-input-inline">
+                            <select name="vipType" lay-verify="required" lay-search="">
+                                <option value="0"  >免费</option>
+                                <option value="1">VIP免费</option>
+                                <option value="2" >金币收费</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">漫画来源</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="from" placeholder="非采集留空" class="layui-input">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">来源ID</label>
+                        <div class="layui-input-inline">
+                            <input type="number" name="did"  placeholder="非采集留空" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs6">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">审核状态</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="review" value="0" title="未审核">
+                            <input type="radio" name="review" value="1" title="已审核" checked>
+                            <input type="radio" name="review" value="2" title="拒绝">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-row layui-col-space14">
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">漫画介绍</label>
+                            <div class="layui-input-block">
+                                <textarea name="description" placeholder="漫画介绍" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">拒绝理由</label>
+                            <div class="layui-input-block">
+                                <textarea name="rejectReason" placeholder="后台发布可忽略" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item" style="text-align: center;">
+
+            <button class="layui-btn" lay-submit lay-filter="add">立即提交</button>
+
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </form>
+</div>
+<!--js逻辑-->
+<script src="/static/admin/lib/layui/layui.js"></script>
+
+<script>
+
+    layui.use('upload', function () {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        //拖拽上传
+        upload.render({
+            elem: '#thumb'
+            , url: '/admin/common/upload' //改成您自己的上传接口
+            , done: function (res) {
+                layer.msg('上传成功');
+                layui.$('#thumbImage').attr('src', res.name);
+                layui.$('#thumbImg').val(res.name);
+            }
+        });
+        upload.render({
+            elem: '#cover'
+            , url: '/admin/common/upload' //改成您自己的上传接口
+            , done: function (res) {
+                layer.msg('上传成功');
+                layui.$('#coverImage').attr('src', res.name);
+                layui.$('#coverImg').val(res.name);
+            }
+        });
+    });
+
+</script>
+
+<script>
+    layui.use(["element", "form", "okLayer", "okUtils"], function () {
+        let form = layui.form;
+        let okLayer = layui.okLayer;
+        let okUtils = layui.okUtils;
+
+        okLoading.close();
+
+
+        form.on("submit(add)", function (data) {
+            okUtils.ajax("/admin/comics", "post", data.field, true).done(function (response) {
+
+                okLayer.greenTickMsg(response.msg, function () {
+                    parent.layer.close(parent.layer.getFrameIndex(window.name));
+                });
+            }).fail(function (error) {
+                console.log(error)
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

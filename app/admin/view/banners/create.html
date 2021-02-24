@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/css/oksub.css">
+
+    <script type="text/javascript" src="/static/admin/lib/loading/okLoading.js"></script>
+</head>
+<body>
+<div class="ok-body">
+    <!--form表单-->
+    <form class="layui-form layui-form-pane ok-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" placeholder="请输入名称" autofocus class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图片</label>
+            <div class="layui-input-block">
+                <input type="text" name="image" id="image" placeholder="输入图片地址或者上传" class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="text-align: center">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>图片</legend>
+            </fieldset>
+            <div class="layui-upload-drag" id="test10">
+                <i class="layui-icon"></i>
+                <p>点击上传，或将文件拖拽到此处</p>
+                <div class="layui-hide" id="uploadDemoView">
+                    <hr>
+                    <img src="" alt="上传成功后渲染" style="max-width: 196px">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">跳转地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="href" placeholder="请输入跳转地址" class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="number" name="sort" placeholder="请输入序号" value="1" class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="status" lay-skin="switch" lay-text="启用|停用" checked value="1">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">漫画id</label>
+            <div class="layui-input-block">
+                <input type="number" name="comic_id" placeholder="漫画id对应类型" value="1" class="layui-input"
+                  >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图片类型</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="type" lay-skin="switch" lay-text="漫画|广告" checked value="1">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="addArticle">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--js逻辑-->
+<script src="/static/admin/lib/layui/layui.js"></script>
+
+<script>
+    layui.use('upload', function () {
+        var $ = layui.jquery
+            , upload = layui.upload;
+        //拖拽上传
+        upload.render({
+            elem: '#test10'
+            , url: '/admin/common/upload' //改成您自己的上传接口
+            , done: function (res) {
+                layer.msg('上传成功');
+                layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.name);
+                layui.$('#image').val(res.name);
+            }
+        });
+    });
+</script>
+
+<script>
+    layui.use(["form", "okUtils", "okLayer"], function () {
+        let form = layui.form;
+        let okUtils = layui.okUtils;
+        let okLayer = layui.okLayer;
+        okLoading.close();
+        form.on("submit(addArticle)", function (data) {
+            okUtils.ajax("/admin/banners", "post", data.field, true).done(function (response) {
+                okLayer.greenTickMsg(response.msg, function () {
+
+                    parent.layer.close(parent.layer.getFrameIndex(window.name));
+                });
+            }).fail(function (error) {
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

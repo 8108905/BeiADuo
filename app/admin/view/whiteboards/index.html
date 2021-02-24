@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/css/oksub.css">
+    <script type="text/javascript" src="/static/admin/lib/loading/okLoading.js"></script>
+</head>
+<body>
+<div class="ok-body">
+    <!--模糊搜索区域-->
+
+    <!--数据表格-->
+    <table class="layui-hide" id="tableId" lay-filter="tableFilter"></table>
+
+</div>
+<!--js逻辑-->
+<script src="/static/admin/lib/layui/layui.js"></script>
+<script>
+    layui.use(["element", "jquery", "table", "form", "laydate", "okLayer", "okUtils"], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let laydate = layui.laydate;
+        let okLayer = layui.okLayer;
+        let okUtils = layui.okUtils;
+        let $ = layui.jquery;
+
+
+        okLoading.close($);
+        let userTable = table.render({
+            elem: '#tableId',
+            url: '/admin/users/getAll',
+            limit: 20,
+            page: true,
+            toolbar: true,
+            toolbar: "#toolbarTpl",
+            size: "sm",
+            parseData: function(res){ //res 即为原始返回的数据
+
+                console.log(res)
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.data//解析数据列表
+                };
+            }
+            ,
+            cols: [[
+                {type: "checkbox", fixed: "left"},
+                {field: "id", title: "ID", width: 60, sort: true},
+                {field: "name", title: "name", width: 100, align: "center"},
+                {field: "email", title: "Email", width: 100, align: "center"},
+                {field: "role", title: "用户组", width: 100, align: "center", templet: "#roleTpl"},
+                {field: "phone", title: "电话号", width: 100, align: "center"},
+                {field: "phoneArea", title: "电话归属地", width: 100, align: "center", templet: "#phoneArea"},
+                {field: "status", title: "状态", width: 100, align: "center", templet: "#statusTpl"},
+                {field: "loginCount", title: "登陆次数", width: 80,align: "center"},
+                {field: "lastLoginIp", title: "最后登陆IP", width: 145, align: "center"},
+                {field: "lastLoginIpArea", title: "登陆地点", width: 145, align: "center", templet: "#lastLoginIpArea"},
+                {field: "vipEndAt", title: "VIP过期时间", width: 145, align: "center",templet: '#vipEndAt'},
+                {field: "lastLoginAt", title: "最后登陆时间", width: 145, align: "center",templet: '#lastLoginAt'},
+                {field: "create_time", title: "创建时间", width: 145, align: "center"},
+                {field: "update_time", title: "更新时间", width: 145, align: "center"},
+                {title: "操作", width: 100, align: "center", fixed: "right", templet: "#operationTpl"}
+            ]],
+            done: function (res, curr, count) {
+                console.info(res, curr, count);
+            }
+        });
+
+        form.on("submit(search)", function (data) {
+            console.log(data.field);
+            userTable.reload({
+                where: data.field,
+                page: {curr: 1}
+            });
+            return false;
+        });
+
+        table.on("toolbar(tableFilter)", function (obj) {
+            switch (obj.event) {
+                case "batchEnabled":
+                    batchEnabled();
+                    break;
+                case "batchDisabled":
+                    batchDisabled();
+                    break;
+                case "batchDel":
+                    batchDel();
+                    break;
+                case "add":
+                    add();
+                    break;
+            }
+        });
+
+        table.on("tool(tableFilter)", function (obj) {
+            let data = obj.data;
+            switch (obj.event) {
+                case "edit":
+                    edit(data);
+                    break;
+                case "del":
+                    del(data.id);
+                    break;
+            }
+        });
+
+        function batchEnabled() {
+            okLayer.confirm("确定要批量启用吗？", function (index) {
+                layer.close(index);
+                let idsStr = okUtils.tableBatchCheck(table);
+                if (idsStr) {
+                    okUtils.ajax("/user/normalUser", "put", {idsStr: idsStr}, true).done(function (response) {
+                        console.log(response);
+                        okUtils.tableSuccessMsg(response.msg);
+                    }).fail(function (error) {
+                        console.log(error)
+                    });
+                }
+            });
+        }
+
+        function batchDisabled() {
+            okLayer.confirm("确定要批量停用吗？", function (index) {
+                layer.close(index);
+                let idsStr = okUtils.tableBatchCheck(table);
+                if (idsStr) {
+                    okUtils.ajax("/user/stopUser", "put", {idsStr: idsStr}, true).done(function (response) {
+                        console.log(response);
+                        okUtils.tableSuccessMsg(response.msg);
+                    }).fail(function (error) {
+                        console.log(error)
+                    });
+                }
+            });
+        }
+
+        function batchDel() {
+            okLayer.confirm("确定要批量删除吗？", function (index) {
+                layer.close(index);
+                let idsStr = okUtils.tableBatchCheck(table);
+                if (idsStr) {
+                    $.post('/admin/users/batchDel',{'data':idsStr},function (res) {
+                        console.log(res);
+                        if (res.status =='success')
+                        {
+                            okUtils.tableSuccessMsg(res.msg);
+                        }else {
+                            console.log(res.msg)
+                            okUtils.tableSuccessMsg(res.msg);
+                        }
+                    })
+                }
+            });
+        }
+
+        function add() {
+            okLayer.open("添加用户", "/admin/users/create", "50%", "70%", null, function () {
+                userTable.reload();
+            })
+        }
+
+        function edit(data) {
+            console.log(data.id);
+            okLayer.open("更新用户", "/admin/users/"+data.id+"/edit", "50%", "70%", null,function () {
+                userTable.reload();
+            })
+        }
+
+        function del(id) {
+            okLayer.confirm("确定要删除吗？", function () {
+                $.ajax({
+                    type:'delete',
+                    'url':'/admin/users/'+id,
+                    success:function (res) {
+                        console.log(res);
+                        if (res.status =='success')
+                        {
+                            okUtils.tableSuccessMsg(res.msg);
+                        }else {
+                            console.log(res.msg)
+                            okUtils.tableSuccessMsg(res.msg);
+                        }
+                    }
+                })
+            })
+        }
+    })
+</script>
+<!-- 头工具栏模板 -->
+<script type="text/html" id="toolbarTpl">
+    <div class="layui-btn-container">
+        <!--        <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="batchEnabled">批量启用</button>-->
+        <!--        <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="batchDisabled">批量停用</button>-->
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDel">批量删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加用户</button>
+    </div>
+</script>
+<!-- 行工具栏模板 -->
+<script type="text/html" id="operationTpl">
+    <a href="javascript:" title="编辑" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
+    <a href="javascript:" title="删除" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+</script>
+<script type="text/html" id="vipEndAt">
+    {{#  if(!d.vipEndAt){ }}
+    <span class="layui-btn layui-btn-normal layui-btn-xs">已过期</span>
+    {{#  } else { }}
+    <span class="layui-btn layui-btn-warm layui-btn-xs">{{d.vipEndAt}}</span>
+    {{#  } }}
+</script>
+
+
+<script type="text/html" id="lastLoginAt">
+    {{#  if(!d.lastLoginAt){ }}
+    <span class="layui-btn layui-btn-warm layui-btn-xs">从未登陆</span>
+    {{#  } }}
+</script>
+
+<!-- 启用|停用模板 -->
+<script type="text/html" id="statusTpl">
+    {{#  if(d.status == 1){ }}
+    <span class="layui-btn layui-btn-normal layui-btn-xs">已启用</span>
+    {{#  } else if(d.status == 0) { }}
+    <span class="layui-btn layui-btn-warm layui-btn-xs">已停用</span>
+    {{#  } }}
+</script>
+<script type="text/html" id="roleTpl">
+    {{#  if(d.role == 1){ }}
+    <span class="layui-btn layui-btn-disabled layui-btn-xs">普通用户</span>
+    {{#  } else if(d.role == 2) { }}
+    <span class="layui-btn layui-btn-normal layui-btn-xs">超级会员</span>
+    {{#  } else if(d.role == 3) { }}
+    <span class="layui-btn layui-btn-primary layui-btn-xs">入住作者</span>
+    {{#  } else if(d.role == 4) { }}
+    <span class="layui-btn layui-btn-danger layui-btn-xs">超级管理员</span>
+    {{#  } }}
+</script>
+</body>
+</html>

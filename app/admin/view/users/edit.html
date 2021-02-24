@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/css/oksub.css">
+    <script type="text/javascript" src="/static/admin/lib/loading/okLoading.js"></script>
+</head>
+<body>
+<div class="ok-body">
+    <!--form表单-->
+    <form class="layui-form layui-form-pane ok-form">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" value="{$user.name}" placeholder="请输入用户名" autocomplete="off"
+                       class="layui-input"
+                       lay-verify="required">
+                <input type="hidden" name="id" value="{$user.id}"
+                       class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" value="{$user.email}" placeholder="请输入邮箱" autocomplete="off"
+                       class="layui-input"
+                       lay-verify="email">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" value="{$user.password}" placeholder="请输入密码" autocomplete="off"
+                       class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色</label>
+            <div class="layui-input-block">
+                <select name="group_id">
+                    <option value="1" {$user.group_id==1 ?
+                    'selected' : ''} >普通用户</option>
+                    <option value="2" {$user.group_id==2 ?
+                    'selected' : ''}>超级会员</option>
+                    <option value="3" {$user.group_id==3 ?
+                    'selected' : ''}>入住作者</option>
+                    <option value="4" {$user.group_id==4 ?
+                    'selected' : ''}>超级管理员</option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="status" lay-skin="switch" lay-text="启用|停用" checked value="1">
+            </div>
+        </div>
+
+
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="add">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--js逻辑-->
+<script src="/static/admin/lib/layui/layui.js"></script>
+<script>
+    layui.use(["element", "form", "okLayer", "okUtils"], function () {
+        let form = layui.form;
+        let okLayer = layui.okLayer;
+        let okUtils = layui.okUtils;
+
+        okLoading.close();
+
+
+        form.on("submit(add)", function (data) {
+            okUtils.ajax("/admin/users/" + data.field.id, "put", data.field, true).done(function (response) {
+                okLayer.greenTickMsg(response.msg, function () {
+                    parent.layer.close(parent.layer.getFrameIndex(window.name));
+                });
+            }).fail(function (error) {
+                console.log(error);
+                });
+            });
+            return false;
+        });
+
+</script>
+</body>
+</html>

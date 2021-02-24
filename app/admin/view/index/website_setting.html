@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/css/oksub.css">
+    <script type="text/javascript" src="/static/admin/lib/loading/okLoading.js"></script>
+</head>
+<body>
+<div class="ok-body  " style="padding-left: 20px;padding-right: 20px; ">
+
+    <div class="layui-fluid">
+        <form class="layui-form" action="">
+
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">是否开启会员自主兑换VIP</div>
+                        <div class="layui-card-body">
+                            <div class="layui-row layui-col-space10 layui-form-item">
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">状态</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="exchange[status]"  value="0">
+                                            <input type="checkbox" name="exchange[status]" lay-skin="switch" lay-text="允许|拒绝" {$website.exchange.status ? 'checked' : ''}
+                                            value="1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">年会员</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="exchange[payment][year]" class="layui-input"
+                                               value="{$website.exchange.payment.year}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">月会员</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="exchange[payment][month]" class="layui-input"
+                                               value="{$website.exchange.payment.month}">
+
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">日会员</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="exchange[payment][day]" class="layui-input"
+                                               value="{$website.exchange.payment.day}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">三级分销</div>
+                        <div class="layui-card-body">
+                            <div class="layui-row layui-col-space10 layui-form-item">
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">状态</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="distribution[status]"  value="0">
+                                            <input type="checkbox" name="distribution[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.distribution.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">一级</label>
+                                    <div class="layui-input-block">
+
+                                        <input type="number" name="distribution[gold][first]" class="layui-input"
+                                               value="{$website.distribution.gold.first}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">二级</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="distribution[gold][second]" class="layui-input"
+                                               value="{$website.distribution.gold.second}">
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">三级</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="distribution[gold][third]" class="layui-input"
+                                               value="{$website.distribution.gold.third}">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">推广者奖励</div>
+                        <div class="layui-card-body">
+
+                            <div class="layui-row layui-col-space10 layui-form-item">
+
+
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">允许推广</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="promote_reward[status]"  value="0">
+
+                                            <input type="checkbox" name="promote_reward[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.promote_reward.status ? 'checked' : ''}
+                                            value="1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="promote_reward[gold]" class="layui-input"
+                                               value="{$website.promote_reward.gold}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">允许邀请</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="invitation_reward[status]"  value="0">
+
+                                            <input type="checkbox" name="invitation_reward[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.invitation_reward.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="invitation_reward[gold]" class="layui-input"
+                                               value="{$website.invitation_reward.gold}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">被邀请者奖励</div>
+                        <div class="layui-card-body">
+                            <div class="layui-row layui-col-space10 layui-form-item">
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">邀请码</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="invitation_code[status]"  value="0">
+
+                                            <input type="checkbox" name="invitation_code[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.invitation_code.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="invitation_code[gold]" class="layui-input"
+                                               value="{$website.invitation_code.gold}">
+
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">推广注册</label>
+                                        <div class="layui-input-block">
+
+                                            <input type="text" hidden  name="promote[status]"  value="0">
+
+
+
+                                            <input type="checkbox" name="promote[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.promote.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="promote[gold]" class="layui-input"
+                                               value="{$website.promote.gold}">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">每日签到</div>
+                        <div class="layui-card-body">
+                            <div class="layui-row layui-col-space10 layui-form-item">
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">状态</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="check_in[status]"  value="0">
+
+                                            <input type="checkbox" name="check_in[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.check_in.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="check_in[gold]" class="layui-input"
+                                               value="{$website.check_in.gold}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">允许充值</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="cash_ratio[status]"  value="0">
+
+                                            <input type="checkbox" name="cash_ratio[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.cash_ratio.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">比例</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="cash_ratio[gold]" class="layui-input"
+                                               value="{$website.cash_ratio.gold}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">用户相关</div>
+                        <div class="layui-card-body">
+                            <div class="layui-row layui-col-space10 layui-form-item">
+
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">评论</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="comment[status]"  value="0">
+
+                                            <input type="checkbox" name="comment[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.comment.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="comment[gold]" class="layui-input"
+                                               value="{$website.comment.gold}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">审核</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="comment[review]"  value="0">
+
+                                            <input type="checkbox" name="comment[review]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.comment.review ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">验证码</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="comment[captcha]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.comment.captcha ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row layui-col-space10 layui-form-item">
+
+
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">留言</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="whiteboard[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.whiteboard.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="whiteboard[gold]" class="layui-input"
+                                               value="{$website.whiteboard.gold}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">审核</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="whiteboard[review]"  value="0">
+                                            <input type="checkbox" name="whiteboard[review]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.whiteboard.review ? 'checked' : ''}
+                                            value="1">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">验证码</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="whiteboard[captcha]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.whiteboard.captcha ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row layui-col-space10 layui-form-item">
+
+
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">注册</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="register[status]"  value="0">
+
+                                            <input type="checkbox" name="register[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.register.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="register[gold]" class="layui-input"
+                                               value="{$website.register.gold}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">审核</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="register[review]"  value="0">
+
+                                            <input type="checkbox" name="register[review]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.whiteboard.review ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">验证码</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="register[captcha]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.register.captcha ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row layui-col-space10 layui-form-item">
+
+
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">投稿</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="contribution[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.contribution.status ? 'checked' : ''}
+                                            value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">漫画奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="contribution[gold][comic]" class="layui-input"
+                                               value="{$website.contribution.gold.comic}">
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">章节奖励</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="contribution[gold][chapter]" class="layui-input"
+                                               value="{$website.contribution.gold.chapter}">
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">免审</label>
+                                    <div class="layui-input-block">
+                                        <select name="contribution[auto_passage]">
+                                            <option value=""></option>
+                                            <option value="1" {$website.contribution.auto_passage==1 ?
+                                            'selected' : ''} >普通用户</option>
+                                            <option value="2" {$website.contribution.auto_passage==2 ?
+                                            'selected' : ''} >VIP会员</option>
+                                            <option value="3" {$website.contribution.auto_passage==3 ?
+                                            'selected' : ''} >签约作者</option>
+                                            <option value="4" {$website.contribution.auto_passage==4 ?
+                                            'selected' : ''} >管理员</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">网站运营</div>
+                        <div class="layui-card-body">
+
+                            <div class="layui-row layui-col-space10 layui-form-item">
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">网站状态：</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" hidden  name="website_status[status]"  value="0">
+
+                                        <input type="checkbox" name="website_status[status]" lay-skin="switch"
+                                               lay-text="正常|关闭" {$website.website_status.status ? 'checked' : ''}
+                                        value="1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-row layui-col-space10 layui-form-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">关闭提示：</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="website_status[content]" placeholder="" class="layui-textarea"> {$website.website_status.content}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">卡密销售
+                        </div>
+                        <div class="layui-card-body">
+
+                            <div class="layui-row layui-col-space10 layui-form-item">
+
+
+                                <div class="layui-col-md4">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">卡密销售</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="card[status]"  value="0">
+
+                                            <input type="checkbox" name="card[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.card.status ? 'checked' : ''} value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md8">
+                                    <label class="layui-form-label">平台</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="card[website]" class="layui-input"
+                                               value="{$website.card.website}">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">API入库</div>
+                        <div class="layui-card-body">
+
+                            <div class="layui-row layui-col-space10 layui-form-item">
+
+
+                                <div class="layui-col-md3">
+
+                                    <label class="layui-form-label">入库</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" hidden  name="interface[status]"  value="0">
+                                        <input type="checkbox" name="interface[status]" lay-skin="switch"
+                                               lay-text="允许|拒绝" {$website.interface.status ? 'checked' : ''} value="1">
+
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">KEY</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="interface[KEY]" class="layui-input"
+                                               value="{$website.interface.KEY}">
+
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">API</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden  name="api[status]"  value="0">
+
+                                            <input type="checkbox" name="api[status]" lay-skin="switch"
+                                                   lay-text="允许|拒绝" {$website.api.status ? 'checked' : ''} value="1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md3">
+                                    <label class="layui-form-label">KEY</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="api[KEY]" class="layui-input"
+                                               value="{$website.api.KEY}">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">第三方登陆</div>
+                        <div class="layui-card-body">
+
+                            {volist name='website.integrated_login' id='vo' key='integrated_login_key'}
+                            <div class="layui-row">
+
+                                <div class="layui-col-md3">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">{$vo.name}</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden name="integrated_login[{$integrated_login_key}][name]" value="{$vo.name}">
+                                            <input type="text" hidden  name="integrated_login[{$integrated_login_key}][status]"  value="0">
+
+
+                                            <input type="checkbox" name="integrated_login[{$integrated_login_key}][status]" lay-skin="switch"
+                                                   lay-text="正常|关闭" {$vo.status ? 'checked' : ''} value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md4">
+                                    <label class="layui-form-label">APP_KEY</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="integrated_login[{$integrated_login_key}][APP_KEY]" class="layui-input"
+                                               value="{$vo.APP_KEY}">
+
+                                    </div>
+                                </div>
+                                <div class="layui-col-md5">
+                                    <label class="layui-form-label">APP_SECRET</label>
+                                    <div class="layui-input-block">
+                                        <input type="number" name="integrated_login[{$integrated_login_key}][APP_SECRET]" class="layui-input"
+                                               value="{$vo.APP_SECRET}">
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {/volist}
+
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">支付配置</div>
+
+
+
+                <div class="layui-card-body">
+
+                    {volist name='website.payment' id='vo' key='payment_key'}
+
+                            <div class="layui-row layui-form-item">
+                                <div class="layui-col-md4">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">{$vo.name}</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" hidden name="payment[{$payment_key}][name]" value="{$vo.name}">
+                                            <input type="text" hidden name="payment[{$payment_key}][status]"  value="0">
+
+                                            <input type="checkbox" name="payment[{$payment_key}][status]" lay-skin="switch" lay-text="正常|关闭" {$vo.status ? 'checked' : ''} value="1">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md8">
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">类型  </label>
+                                        <div class="layui-input-block">
+                                            {volist name='vo.type' id='type_vo' key= 'type_key' }
+                                            <input type="text" hidden name="payment[{$payment_key}][type][{$type_key}][name]" value="{$type_vo.name}">
+
+                                            <input type="text" hidden name="payment[{$payment_key}][type][{$type_key}][status]" value="0">
+
+                                            <input type="checkbox" name="payment[{$payment_key}][type][{$type_key}][status]"  title="{$type_vo.name}" value="1"  {$type_vo.status ?'checked':'' }>
+
+                                            <input type="text" hidden  name="payment[{$payment_key}][type][{$type_key}][key]" value="{$type_vo.key}">
+                                            {/volist}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="layui-row layui-col-space10 layui-form-item">
+
+                                <div class="layui-col-md4">
+                                    <label class="layui-form-label">APP_ID</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="payment[{$payment_key}][APP_ID]" class="layui-input"
+                                               value="{$vo.APP_ID}">
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md4">
+                                    <label class="layui-form-label">KEY</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="payment[{$payment_key}][APP_KEY]" class="layui-input"
+                                               value="{$vo.APP_KEY}">
+
+                                    </div>
+                                </div>
+
+                                <div class="layui-col-md4">
+                                    <label class="layui-form-label">act</label>
+                                    <div class="layui-input-block">
+                                        <select name="payment[{$payment_key}][act]" lay-verify="required">
+                                            <option value="0" {$vo.act == 0 ? 'selected' : ''} >及时到账</option>
+                                            <option value="1" {$vo.act == 1 ? 'selected' : ''} >商家代收</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>  {/volist}
+                </div>
+
+
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">缓存相关</div>
+                        <div class="layui-card-body">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">缓存方式</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="cache[type]" value="0" title="File" {$website.cache.type ==0 ? 'checked': '' }>
+                                    <input type="radio" name="cache[type]" value="1" title="Redis" {$website.cache.type ==1 ? 'checked': '' }>
+                                    <input type="radio" name="cache[type]" value="2" title="Memcached" {$website.cache.type ==2 ? 'checked': '' }>
+                                </div>
+                            </div>
+
+                            {volist name='website.cache.option' id='vo' key='cache_key'}
+                            <div class="layui-card">
+                                <div class="layui-card-header">{$vo.name}</div>
+                                <div class="layui-card-body">
+
+                                    <div class="layui-row layui-col-space10 layui-form-item">
+
+                                        <div class="layui-col-md6">
+                                            <label class="layui-form-label">host</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" hidden name="cache[option][{$cache_key}][name]" value="{$vo.name}">
+
+                                                <input type="text" name="cache[option][{$cache_key}][host]" class="layui-input"
+                                                       value="{$vo.host}">
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md6">
+                                            <label class="layui-form-label">port</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="cache[option][{$cache_key}][port]" class="layui-input"
+                                                       value="{$vo.port}">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="layui-row layui-col-space10 layui-form-item">
+                                        <div class="layui-col-md4">
+                                            <label class="layui-form-label">username</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="cache[option][{$cache_key}][username]" class="layui-input"
+                                                       value="{$vo.username}">
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md4">
+                                            <label class="layui-form-label">password</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="cache[option][{$cache_key}][password]"
+                                                       class="layui-input"  value="{$vo.password}">
+
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-md4">
+                                            <label class="layui-form-label">flag</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" name="cache[option][{$cache_key}][flag]" class="layui-input"
+                                                       value="{$vo.flag}">
+                                                <input type="text" hidden name="cache[option][{$cache_key}][key]" value="{$vo.key}">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            </div>
+                          {/volist}
+
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <div class="layui-footer  " style="left: 0; text-align: center">
+                                    <button class="layui-btn" lay-submit="" lay-filter="addArticle">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--js逻辑-->
+
+    <script src="/static/admin/lib/layui/layui.js"></script>
+
+    <script>
+        layui.use(["form", "okUtils", "okLayer"], function () {
+            let form = layui.form;
+            let okUtils = layui.okUtils;
+            let okLayer = layui.okLayer;
+            okLoading.close();
+            form.on("submit(addArticle)", function (data) {
+                okUtils.ajax("/admin/website_setting", "post", data.field, true).done(function (response) {
+                    okLayer.greenTickMsg(response.msg, function () {
+                        parent.layer.close(parent.layer.getFrameIndex(window.name));
+
+                    });
+                }).fail(function (error) {
+                });
+                return false;
+            });
+        })
+    </script>
+</body>
+</html>
